@@ -4,10 +4,8 @@ import plotly.graph_objects as go
 import pandas as pd
 from datetime import datetime, timedelta
 
-# --- PAGE CONFIG ---
 st.set_page_config(layout="wide", page_title="aeroByte AI Pro Max")
 
-# --- CSS STYLING ---
 st.markdown("""
     <style>
     header {visibility: hidden;}
@@ -38,7 +36,7 @@ st.markdown("""
     </style>
     """, unsafe_allow_html=True)
 
-# --- DATA & SESSION STATE ---
+# DATA & SESSION STATE
 if 'STATION_DATA' not in st.session_state:
     st.session_state.STATION_DATA = {"Anand Vihar": 361, "ITO": 245, "RK Puram": 185, "Dwarka": 210}
 
@@ -53,7 +51,7 @@ if 'MAP_LOCS' not in st.session_state:
 if 'reports' not in st.session_state: 
     st.session_state.reports = []
 
-# --- SIDEBAR: MANUAL STATION REGISTRATION ---
+#  SIDEBAR: MANUAL STATION REGISTRATION
 with st.sidebar:
     st.header("📍 Control Panel")
     selected_station = st.selectbox("Active Station", list(st.session_state.STATION_DATA.keys()))
@@ -78,11 +76,11 @@ with st.sidebar:
     u_age = st.number_input("User Age", 1, 100, 25)
     u_resp = st.checkbox("Respiratory Issues?")
 
-# --- HEADER ---
+#  HEADER
 st.markdown(f"<div class='main-title'>🌍 aeroByte AI: {selected_station}</div>", unsafe_allow_html=True)
 st.markdown("<p style='text-align: center; font-size: 18px;'><span class='status-dot'>●</span> Live IoT Multi-Sensor Stream Active</p>", unsafe_allow_html=True)
 
-# --- 1. EMERGENCY ZONE ---
+# 1. EMERGENCY ZONE 
 if aqi_val > 300:
     st.markdown(f"""
         <div style="background-color:#1e1e2e; padding:30px; border-radius:15px; border: 3px solid #ff4b4b; color:white; margin-bottom:25px;">
@@ -95,7 +93,7 @@ if aqi_val > 300:
         </div>
     """, unsafe_allow_html=True)
 
-# --- 2. TRAFFIC & EMISSION STRATEGY ---
+#  2. TRAFFIC & EMISSION STRATEGY 
 st.subheader("🛠️ Sector-wise AI Interventions")
 t_col, h_col = st.columns(2)
 with t_col:
@@ -126,13 +124,13 @@ with col_f2:
     fig.update_layout(height=350, margin=dict(l=0, r=0, t=10, b=0), template="plotly_white")
     st.plotly_chart(fig, use_container_width=True)
 
-# --- 4. LIVE MAP ---
+#  4. LIVE MAP
 st.divider()
 st.subheader(f"🗺️ Live Station View: {selected_station}")
 coords = st.session_state.MAP_LOCS.get(selected_station, {"lat": 28.6139, "lon": 77.2090})
 st.map(pd.DataFrame([coords]), zoom=12, use_container_width=True)
 
-# --- 5. PROTOTYPE FEATURES & NOVELTY ---
+#  5. PROTOTYPE FEATURES & NOVELTY 
 st.divider()
 st.markdown("<span class='proto-label'>PROTOTYPE V2.0</span>", unsafe_allow_html=True)
 ex1, ex2, ex3 = st.columns(3)
@@ -160,7 +158,7 @@ with ex3:
         st.markdown(f"<h1 style='color:#10b981; margin:0;'>{credits} pts</h1>", unsafe_allow_html=True)
         st.caption("AI-Generated Eco-Credits")
 
-# --- 6. ANALYTICS ROW ---
+#  6. ANALYTICS ROW
 st.divider()
 st.subheader("🔍 Deep AI Forecasting & Source Analysis")
 graph_col1, graph_col2 = st.columns(2)
@@ -185,7 +183,7 @@ with graph_col2:
         fig_h.update_layout(height=350, margin=dict(l=0, r=0, t=0, b=0))
         st.plotly_chart(fig_h, use_container_width=True)
 
-# --- 7. COMMUNITY FEED (BOTTOM) ---
+#  7. COMMUNITY FEED (BOTTOM) 
 st.divider()
 st.subheader("📢 Community Violation Feed")
 v_form, v_feed = st.columns([1, 1.2])
@@ -208,4 +206,5 @@ with v_feed:
 
 st.divider()
 if st.button("🎁 Claim My aeroPoints"):
+
     st.balloons()
